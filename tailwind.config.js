@@ -24,6 +24,8 @@ export default {
           4: "#F3F3F3",
           5: "#f4fcf3",
           6: "#59C6D2",
+          7: "#5a5a5a",
+         
         }
         },
       fontFamily: {
