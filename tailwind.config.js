@@ -25,6 +25,10 @@ export default {
           5: "#f4fcf3",
           6: "#59C6D2",
           7: "#5a5a5a",
+          8: "#e0eeff",
+          9: "#fff3e0",
+          10: "#FFAC33",
+          11: "#328EFF",
          
         }
         },
