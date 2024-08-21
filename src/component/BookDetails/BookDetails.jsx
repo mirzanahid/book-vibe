@@ -1,13 +1,17 @@
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
+import { getLocalHost, removeLocalHost, saveLocalHost } from "../../utilites/localstorage";
+import { Bounce, toast } from "react-toastify";
 
 const BookDetails = () => {
   const bookDetails = useLoaderData();
-  const { bookId } = useParams();
-  const idInt = parseInt(bookId);
+
+  const { booksId } = useParams();
+  const idInt = parseInt(booksId);
 
   const book = bookDetails.find((bookDetail) => bookDetail.bookId == idInt);
 
   const {
+    bookId,
     bookName,
     author,
     bookImg,
@@ -19,6 +23,90 @@ const BookDetails = () => {
     publisher,
     yearOfPublishing,
   } = book;
+
+  const handleForRead = (id) => {
+    const readLocalData = getLocalHost("read-books");
+    const exits = readLocalData.find((readData) => readData === id);
+    if (!exits) {
+     
+      saveLocalHost(id, "read-books");
+      toast.success("Successfully added to read", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      removeLocalHost(id,"wish-books")
+    } else {
+      toast.error("Already added to read", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+
+      return;
+    }
+  };
+
+  const handleForWishList = (id) => {
+    const readLocalData = getLocalHost("read-books");
+    const exitsRead = readLocalData.find((readData) => readData === id);
+    const wishLocalData = getLocalHost("wish-books");
+    const exitsWish = wishLocalData.find((wishData) => wishData === id);
+    if (!exitsRead) {
+      if (!exitsWish) {
+        saveLocalHost(id,"wish-books");
+        toast.success("Successfully added to Wish List", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      } else {
+        toast.error("Already added to Wish List", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        return
+      }
+    } else {
+      toast.error("Already Read this book", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+    return
+  };
 
   return (
     <div className="flex pb-[164px] gap-12">
@@ -68,12 +156,15 @@ const BookDetails = () => {
           </ul>
         </div>
         <div className="mt-8">
-          <Link className=" capitalize font-work font-semibold text-lg border border-[#b8b8b8] text-color-2 rounded py-[14px] px-[30px] hidden md:inline-flex mr-4 hover:text-white hover:bg-color-6 hover:border-color-6 duration-500">
+          <button
+            onClick={() => handleForRead(bookId)}
+            className=" capitalize font-work font-semibold text-lg border border-[#b8b8b8] text-color-2 rounded py-[14px] px-[30px] hidden md:inline-flex mr-4 hover:text-white hover:bg-color-6 hover:border-color-6 duration-500"
+          >
             Read
-          </Link>
-          <Link className=" capitalize font-work font-semibold text-lg border border-[#b8b8b8] text-color-2 rounded py-[14px] px-[30px] hidden md:inline-flex mr-4 hover:text-white hover:bg-color-6 hover:border-color-6 duration-500">
+          </button>
+          <button onClick={()=> handleForWishList(bookId)} className=" capitalize font-work font-semibold text-lg border border-[#b8b8b8] text-color-2 rounded py-[14px] px-[30px] hidden md:inline-flex mr-4 hover:text-white hover:bg-color-6 hover:border-color-6 duration-500">
             Wishlist
-          </Link>
+          </button>
         </div>
       </div>
     </div>
