@@ -16,7 +16,7 @@ const Books = () => {
         <h3 className="font-play font-bold text-[40px] text-color-2">Books</h3>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="md:grid grid-cols-3 gap-6">
         {books.map(book => (
           <Book key={book.bookId} book={book}></Book>
         ))}

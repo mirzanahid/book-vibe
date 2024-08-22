@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const BooksListItem = ({ books }) => {
   const {
@@ -15,8 +16,8 @@ const BooksListItem = ({ books }) => {
   } = books;
   return (
     <div className=" border flex border-color-5 rounded-2xl p-6 mb-6">
-       <div className='bg-color-4 rounded-2xl flex justify-center items-center w-[230px] h-[230px] mr-6'>
-        <img className='h-[172px]' src={bookImg} alt="" />
+      <div className="bg-color-4 rounded-2xl flex justify-center items-center w-[230px] h-[230px] mr-6">
+        <img className="h-[172px]" src={bookImg} alt="" />
       </div>
 
       <div>
@@ -41,11 +42,22 @@ const BooksListItem = ({ books }) => {
         <ul className="font-work font-normal text-base text-color-3 flex gap-4">
           <li className="mb-3">Publisher: {publisher}</li>
           <li className="mb-3">Page {totalPages}</li>
-          <li className="mb-3">Year of Publishing:  {yearOfPublishing}</li>
+          <li className="mb-3">Year of Publishing: {yearOfPublishing}</li>
         </ul>
 
         <div className="border-t border-color-4 pt-4">
-            <span className="font-work font-medium text-base text-color-11 bg-color-8 py-[7px] px-[16px] rounded-[30px] inline-block ">Category: {category}</span> <span className="font-work font-medium text-base text-color-10 bg-color-9 py-[7px] px-[16px] rounded-[30px] ml-3 inline-block ">Rating: 4.5</span> 
+          <span className="font-work font-medium text-base text-color-11 bg-color-8 py-[7px] px-[16px] rounded-[30px] inline-block ">
+            Category: {category}
+          </span>{" "}
+          <span className="font-work font-medium text-base text-color-10 bg-color-9 py-[7px] px-[16px] rounded-[30px] ml-3 inline-block ">
+            Rating: {rating}
+          </span>
+          <Link
+            to={`/book-details/${bookId}`}
+            className="capitalize bg-color-1 font-work font-medium text-base text-white px-[28px] py-[12px] rounded-[30px] ml-3"
+          >
+            View Details
+          </Link>
         </div>
       </div>
     </div>
